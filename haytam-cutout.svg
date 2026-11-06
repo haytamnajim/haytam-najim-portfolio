@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" role="img" aria-label="HAITAM NAJIM — initiales HN">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="42%" r="62%">
+      <stop offset="0" stop-color="#ef4444" stop-opacity="0.42"/>
+      <stop offset="0.55" stop-color="#ef4444" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="480" y2="480">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.45" stop-color="#ef4444"/>
+      <stop offset="1" stop-color="#450a0a"/>
+    </linearGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#ffffff" opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect width="480" height="480" rx="0" fill="#080808"/>
+  <rect width="480" height="480" fill="url(#dots)"/>
+  <rect width="480" height="480" fill="url(#glow)"/>
+  <circle cx="240" cy="210" r="150" fill="none" stroke="url(#ring)" stroke-width="10" opacity="0.95"/>
+  <circle cx="240" cy="210" r="112" fill="#111113" stroke="#ef4444" stroke-width="2"/>
+  <text x="240" y="246" font-family="'Bebas Neue', Arial Black, sans-serif" font-size="118" fill="#f4f4f5" text-anchor="middle" letter-spacing="6">HN</text>
+  <path d="M90 390 H390" stroke="#ef4444" stroke-width="6" opacity="0.9"/>
+  <text x="240" y="430" font-family="'JetBrains Mono', Consolas, monospace" font-size="18" fill="#ef4444" text-anchor="middle" letter-spacing="4">FULL STACK + AI</text>
+</svg>
