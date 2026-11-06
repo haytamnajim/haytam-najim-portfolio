@@ -479,7 +479,7 @@
       document.body.setAttribute('data-theme', theme);
       document.documentElement.style.colorScheme = theme;
       buttons.forEach((button) => {
-        button.textContent = theme === 'light' ? '☾' : '◐';
+        button.textContent = theme === 'light' ? '☾' : '☀';
         button.setAttribute('aria-label', theme === 'light' ? 'Passer en thème sombre' : 'Passer en thème clair');
       });
       try { localStorage.setItem('portfolio-theme', theme); } catch (e) {}
@@ -522,5 +522,21 @@
     initThemeToggle();
     initMobileMenu();
   });
+
+  function initScrollProgress() {
+    const bar = document.querySelector('.scroll-progress > span');
+    if (!bar) return;
+    const update = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      bar.style.width = progress + '%';
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  }
+
+  document.addEventListener('DOMContentLoaded', initScrollProgress);
 
 })();

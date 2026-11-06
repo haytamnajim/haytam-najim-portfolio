@@ -1662,3 +1662,43 @@ body[data-theme="light"] #aurora-canvas { opacity: 0.35; }
   .nav-dock { gap: 12px; padding: 10px 14px; min-height: 54px; }
   .theme-toggle { width: 36px; height: 36px; }
 }
+/* ==========================================================================
+   SCROLL PROGRESS BAR
+   ========================================================================== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 101;
+  background: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+.scroll-progress > span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ef4444, #f87171);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.55);
+  transition: width 80ms linear;
+}
+body[data-theme="light"] .scroll-progress { background: rgba(0, 0, 0, 0.08); }
+
+/* ==========================================================================
+   MOBILE MENU ANIMATION
+   ========================================================================== */
+@media (max-width: 768px) {
+  .nav-links {
+    display: flex;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+  .nav-links.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
