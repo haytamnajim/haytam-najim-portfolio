@@ -362,7 +362,7 @@ export default function App() {
       {flashKey > 0 && (
         <div
           key={flashKey}
-          className="accent-flash"
+          className="accent-sweep"
           style={{ '--flash-color': ACCENTS.find((item) => item.id === accent)?.value || '#ef4444' }}
           aria-hidden="true"
         />
