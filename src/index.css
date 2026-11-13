@@ -242,6 +242,25 @@ main {
   color: #000;
 }
 
+.btn-crimson {
+  background: var(--accent-red);
+  color: #050505;
+  font-weight: 800;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 6px 24px var(--accent-red-glow), inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+.btn-crimson:hover {
+  background: var(--accent-red-hover);
+  color: #050505;
+  box-shadow: 0 8px 30px var(--accent-red-glow), inset 0 1px 0 rgba(255,255,255,.4);
+  transform: translateY(-2px);
+}
+
+.btn-crimson:active {
+  transform: translateY(0) scale(.98);
+}
+
 .btn-glass {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-bright);
