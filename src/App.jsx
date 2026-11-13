@@ -149,12 +149,14 @@ function Toast({ message }) {
 export default function App() {
   const [theme, setTheme] = useState('dark');
   const [accent, setAccent] = useState('crimson');
+  const [flashKey, setFlashKey] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const [activeLayer, setActiveLayer] = useState(1);
   const [filter, setFilter] = useState('all');
   const [toast, setToast] = useState('');
   const scrollBarRef = useRef(null);
+  const firstAccent = useRef(true);
 
   useEffect(() => {
     const saved = (() => { try { return localStorage.getItem('portfolio-theme'); } catch { return null; } })();
@@ -174,6 +176,11 @@ export default function App() {
   useEffect(() => {
     document.body.setAttribute('data-accent', accent);
     try { localStorage.setItem('portfolio-accent', accent); } catch {}
+    if (firstAccent.current) {
+      firstAccent.current = false;
+      return;
+    }
+    setFlashKey((key) => key + 1);
     document.body.classList.remove('accent-change');
     void document.body.offsetWidth;
     document.body.classList.add('accent-change');
@@ -351,6 +358,15 @@ export default function App() {
           />
         ))}
       </div>
+
+      {flashKey > 0 && (
+        <div
+          key={flashKey}
+          className="accent-flash"
+          style={{ '--flash-color': ACCENTS.find((item) => item.id === accent)?.value || '#ef4444' }}
+          aria-hidden="true"
+        />
+      )}
 
       <Toast message={toast} />
     </>
