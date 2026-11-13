@@ -2,42 +2,33 @@
 
 Portfolio personnel de **HAITAM NAJIM**, Développeur Web Full Stack & AI Automation Specialist, basé à Casablanca, Maroc.
 
-## Aperçu
-
-![Portfolio desktop](assets/screenshots/desktop.png)
-
-![Portfolio mobile](assets/screenshots/mobile.png)
-
 ## Stack
 
-- HTML5 / CSS3 / Vanilla JavaScript
-- Noir & Crimson Op-Art design
+- React 19
+- Vite
+- CSS vanilla — Noir & Crimson Op-Art design
 - Canvas aurora animé
 - Mode clair / sombre
 - Menu mobile responsive
 - Swarm rebuild animation (takeover) — moteur vendored
 
-## Projets présentés
-
-- **Plateforme SAV Multi-Agents** — DXC Technology Morocco
-- **OnboardPro** — plateforme SaaS RH & onboarding
-- **Ark X** — workflows IA et automatisation
-- **Casa Merchant** — disponibilité produit en temps réel
-
-## Formation & certifications
-
-- Licence Professionnelle — Full Stack & DevOps
-- Technicien Spécialisé — Web Full Stack
-- IBM, Meta, AWS, MongoDB, Board Infinity
-
-## Lancer localement
+## Développement
 
 ```powershell
-cd haytam-najim-portfolio
-npx serve .
+npm install
+npm run dev
 ```
 
-Ou ouvrir `index.html` directement dans le navigateur.
+## Build de production
+
+```powershell
+npm run build
+npm run preview
+```
+
+## Déploiement
+
+Le projet est connecté à Vercel. Chaque `git push` sur `main` déclenche un déploiement automatique.
 
 ## Contact
 
@@ -48,4 +39,4 @@ Ou ouvrir `index.html` directement dans le navigateur.
 
 ## Note légale
 
-Le fichier `swarm/swarm.js` est vendored depuis un dépôt tiers et son en-tête indique qu’il est all-rights-reserved. Il est inclus dans ce dépôt avec l’autorisation du propriétaire du portfolio. Vérifie la licence amont avant toute redistribution publique.
+Le fichier `public/swarm/swarm.js` est vendored depuis un dépôt tiers et son en-tête indique qu’il est all-rights-reserved. Il est inclus dans ce dépôt avec l’autorisation du propriétaire du portfolio.
