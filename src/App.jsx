@@ -11,6 +11,16 @@ const LAYER_DATA = {
   7: { badge: 'LAYER 07 // ESCALADE', title: 'Relance & escalade intelligente', desc: 'Surveillance SLA/CSAT, relances automatisées et escalade managériale lorsque le traitement dépasse les seuils définis.', tags: ['Relance', 'Escalade SLA/CSAT'] },
 };
 
+const ACCENTS = [
+  { id: 'crimson', name: 'Crimson', value: '#ef4444' },
+  { id: 'orange', name: 'Orange', value: '#f97316' },
+  { id: 'amber', name: 'Amber', value: '#f59e0b' },
+  { id: 'emerald', name: 'Emerald', value: '#10b981' },
+  { id: 'cyan', name: 'Cyan', value: '#06b6d4' },
+  { id: 'violet', name: 'Violet', value: '#8b5cf6' },
+  { id: 'pink', name: 'Pink', value: '#ec4899' },
+];
+
 const PROJECTS = [
   { id: 'SYS-01', category: 'ai', chip: 'Autonomous AI', title: 'Plateforme SAV Multi-Agents', desc: 'Pipeline de 7 agents IA pour automatiser email, Outlook et ServiceNow avec OCR Vision, RAG, règles métier, génération LLM et escalade.', tags: ['React 19', 'FastAPI', 'Ollama'] },
   { id: 'SYS-02', category: 'web', chip: 'SaaS RH', title: 'OnboardPro', desc: 'Plateforme SaaS RH & onboarding : matching de compétences, GED sécurisée, workflows RH Managers et recherche sémantique.', tags: ['Next.js 16', 'Supabase', 'Qdrant'] },
@@ -138,6 +148,7 @@ function Toast({ message }) {
 
 export default function App() {
   const [theme, setTheme] = useState('dark');
+  const [accent, setAccent] = useState('crimson');
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const [activeLayer, setActiveLayer] = useState(1);
@@ -152,6 +163,23 @@ export default function App() {
     document.body.setAttribute('data-theme', next);
     document.documentElement.style.colorScheme = next;
   }, []);
+
+  useEffect(() => {
+    const saved = (() => { try { return localStorage.getItem('portfolio-accent'); } catch { return null; } })();
+    const next = ACCENTS.some((item) => item.id === saved) ? saved : 'crimson';
+    setAccent(next);
+    document.body.setAttribute('data-accent', next);
+  }, []);
+
+  useEffect(() => {
+    document.body.setAttribute('data-accent', accent);
+    try { localStorage.setItem('portfolio-accent', accent); } catch {}
+    document.body.classList.remove('accent-change');
+    void document.body.offsetWidth;
+    document.body.classList.add('accent-change');
+    const timeout = window.setTimeout(() => document.body.classList.remove('accent-change'), 650);
+    return () => window.clearTimeout(timeout);
+  }, [accent]);
 
   useEffect(() => {
     document.body.setAttribute('data-theme', theme);
@@ -308,6 +336,21 @@ export default function App() {
 
         <section id="contact" className="section"><div className="glass-card contact-card"><div className="contact-glow-red" /><div className="contact-content"><div className="section-tag">DIRECT CONNECT</div><h2 className="contact-title">Construisons quelque chose d’utile.</h2><p className="contact-subtitle">Disponible pour des missions de développement web full stack, SaaS, automatisation IA et intégration CI/CD.</p><div className="email-action-box"><span className="email-address">haytamnajim07@gmail.com</span><button className="btn btn-primary copy-btn" onClick={copyEmail} aria-label="Copier l’email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg><span>Copy Email Address</span></button></div><div className="social-links-row"><a href="https://linkedin.com/in/haytamnajim" target="_blank" rel="noopener noreferrer" className="social-pill" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V9h4v1a6 6 0 0 1 2-1z" /><rect x="2" y="9" width="4" height="12" /><path d="M4 4h.01" /></svg><span>linkedin.com/in/haytamnajim</span></a><a href="https://haitam-najim.me" target="_blank" rel="noopener noreferrer" className="social-pill" aria-label="Site web"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg><span>haitam-najim.me</span></a><a href="tel:+212709048305" className="social-pill" aria-label="Téléphone"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.96.37 1.9.7 2.8a2 2 0 0 1-.45 2.11L8.09 10.91a16 16 0 0 0 6 6l2.28-1.16a2 2 0 0 1 2.11.45c.9.33 1.84.58 2.8.7A2 2 0 0 1 22 16.92z" /></svg><span>+212 709 048 305</span></a></div><div className="footer-meta"><span>© 2026 HAITAM NAJIM. Casablanca, Maroc.</span><span>Full Stack · AI Automation · DevOps</span></div></div></div></section>
       </main>
+
+      <div className="color-palette" role="toolbar" aria-label="Palette de couleurs">
+        <span className="color-palette-label">THEME</span>
+        {ACCENTS.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            className={`color-dot ${accent === item.id ? 'active' : ''}`}
+            style={{ '--dot-color': item.value }}
+            onClick={() => setAccent(item.id)}
+            aria-label={`Changer le thème en ${item.name}`}
+            title={item.name}
+          />
+        ))}
+      </div>
 
       <Toast message={toast} />
     </>
