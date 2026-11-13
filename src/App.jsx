@@ -156,26 +156,7 @@ export default function App() {
   const [filter, setFilter] = useState('all');
   const [toast, setToast] = useState('');
   const scrollBarRef = useRef(null);
-  const cursorRef = useRef(null);
   const firstAccent = useRef(true);
-
-  useEffect(() => {
-    const cursor = cursorRef.current;
-    if (!cursor) return;
-    const onMove = (event) => {
-      cursor.style.opacity = '1';
-      cursor.style.transform = `translate(${event.clientX}px, ${event.clientY}px) translate(-50%, -50%)`;
-    };
-    const onLeave = () => {
-      cursor.style.opacity = '0';
-    };
-    window.addEventListener('mousemove', onMove, { passive: true });
-    document.documentElement.addEventListener('mouseleave', onLeave);
-    return () => {
-      window.removeEventListener('mousemove', onMove);
-      document.documentElement.removeEventListener('mouseleave', onLeave);
-    };
-  }, []);
 
   useEffect(() => {
     const saved = (() => { try { return localStorage.getItem('portfolio-theme'); } catch { return null; } })();
@@ -309,7 +290,6 @@ export default function App() {
     <>
       <div className="scroll-progress" aria-hidden="true"><span ref={scrollBarRef} /></div>
       <AuroraCanvas />
-      <div className="cursor-glow" ref={cursorRef} aria-hidden="true" />
 
       <Navbar
         activeSection={activeSection}
