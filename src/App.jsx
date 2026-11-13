@@ -37,10 +37,14 @@ const FILTERS = [
   { value: 'systems', label: 'Core Engineering' },
 ];
 
-function AuroraCanvas() {
+function AuroraCanvas({ accent }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    const hex = ACCENTS.find((item) => item.id === accent)?.value || '#ef4444';
+    const match = /^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i.exec(hex);
+    const rgb = match ? `${parseInt(match[1], 16)}, ${parseInt(match[2], 16)}, ${parseInt(match[3], 16)}` : '239, 68, 68';
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -51,8 +55,8 @@ function AuroraCanvas() {
     let frame = 0;
     const mouse = { x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 };
     const orbs = [
-      { x: 0.35, y: 0.40, radius: 0.50, vx: 0.0003, vy: 0.0002, color: 'rgba(239, 68, 68, 0.14)' },
-      { x: 0.70, y: 0.45, radius: 0.42, vx: -0.0002, vy: 0.0003, color: 'rgba(185, 28, 28, 0.10)' },
+      { x: 0.35, y: 0.40, radius: 0.50, vx: 0.0003, vy: 0.0002, color: `rgba(${rgb}, 0.14)` },
+      { x: 0.70, y: 0.45, radius: 0.42, vx: -0.0002, vy: 0.0003, color: `rgba(${rgb}, 0.09)` },
       { x: 0.50, y: 0.80, radius: 0.48, vx: 0.0002, vy: -0.0002, color: 'rgba(255, 255, 255, 0.03)' },
     ];
 
@@ -132,7 +136,7 @@ function AuroraCanvas() {
       window.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('visibilitychange', onVisibilityChange);
     };
-  }, []);
+  }, [accent]);
 
   return <canvas id="aurora-canvas" ref={canvasRef} aria-hidden="true" />;
 }
@@ -289,7 +293,7 @@ export default function App() {
   return (
     <>
             <div className="scroll-progress" aria-hidden="true"><span ref={scrollBarRef} /></div>
-      <AuroraCanvas />
+      <AuroraCanvas accent={accent} />
 
       <Navbar
         activeSection={activeSection}
