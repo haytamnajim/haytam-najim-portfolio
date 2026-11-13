@@ -1,5 +1,5 @@
 ﻿/* ==========================================================================
-   HAITAM NAJIM â€” FULL STACK & AI AUTOMATION
+   HAITAM NAJIM — FULL STACK & AI AUTOMATION
    Design System: Noir & Crimson Op-Art (Red, Black, White)
    Inspired by Film Noir, Geometric Brutalism & Op-Art Hypnotic Vortex
    ========================================================================== */
@@ -1339,7 +1339,7 @@ main {
 /* ==========================================================================
    RESPONSIVE MEDIA QUERIES
    ========================================================================== */
-/* Section divider â€” coordinate label | rule | index label.
+/* Section divider — coordinate label | rule | index label.
    Base rule was missing, so the bar collapsed into one run-together string. */
 .section-divider-bar {
   display: grid;
@@ -1535,7 +1535,7 @@ body[data-theme="light"] #aurora-canvas { opacity: 0.35; }
 .nav-item { font-size: 14px; padding: 8px 14px; }
 .dock-status { font-size: 12px; padding-left: 12px; }
 /* ==========================================================================
-   DISPATCH BUTTON â€” PREMIUM CTA
+   DISPATCH BUTTON — PREMIUM CTA
    ========================================================================== */
 .dock-cta {
   position: relative;
