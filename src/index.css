@@ -1702,3 +1702,20 @@ body[data-theme="light"] .scroll-progress { background: rgba(0, 0, 0, 0.08); }
     pointer-events: auto;
   }
 }
+/* ==========================================================================
+   NAVBAR CLEAN STRUCTURE
+   ========================================================================== */
+.dock-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.dock-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+@media (max-width: 768px) {
+  .dock-right { gap: 8px; }
+  .dock-controls { gap: 6px; }
+}

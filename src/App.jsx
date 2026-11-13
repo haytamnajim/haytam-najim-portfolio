@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Navbar from './components/Navbar.jsx';
 
 const LAYER_DATA = {
   1: { badge: 'LAYER 01 // SAV INTAKE', title: 'Réception & classification omnicanale', desc: 'Collecte et qualification des demandes SAV depuis email, Outlook et ServiceNow avec routage vers l’agent spécialisé.', tags: ['Email / Outlook', 'ServiceNow'] },
@@ -9,14 +10,6 @@ const LAYER_DATA = {
   6: { badge: 'LAYER 06 // ITSM SYNC', title: 'ServiceNow bi-directionnel', desc: 'Synchronisation, création, mise à jour et résolution de tickets ServiceNow avec traçabilité complète et sécurité JWT.', tags: ['ServiceNow', 'JWT'] },
   7: { badge: 'LAYER 07 // ESCALADE', title: 'Relance & escalade intelligente', desc: 'Surveillance SLA/CSAT, relances automatisées et escalade managériale lorsque le traitement dépasse les seuils définis.', tags: ['Relance', 'Escalade SLA/CSAT'] },
 };
-
-const NAV_LINKS = [
-  { href: '#about', label: 'Profil' },
-  { href: '#flagships', label: 'Projets' },
-  { href: '#projects', label: 'Matrix' },
-  { href: '#formation', label: 'Formation' },
-  { href: '#contact', label: 'Contact' },
-];
 
 const PROJECTS = [
   { id: 'SYS-01', category: 'ai', chip: 'Autonomous AI', title: 'Plateforme SAV Multi-Agents', desc: 'Pipeline de 7 agents IA pour automatiser email, Outlook et ServiceNow avec OCR Vision, RAG, règles métier, génération LLM et escalade.', tags: ['React 19', 'FastAPI', 'Ollama'] },
@@ -186,16 +179,9 @@ export default function App() {
   useEffect(() => {
     if (!('IntersectionObserver' in window)) return;
     const sections = document.querySelectorAll('section[id]');
-    const navItems = document.querySelectorAll('.nav-item');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          setActiveSection(id);
-          navItems.forEach((item) => {
-            item.classList.toggle('active', item.getAttribute('href') === `#${id}`);
-          });
-        }
+        if (entry.isIntersecting) setActiveSection(entry.target.id);
       });
     }, { threshold: 0.3 });
     sections.forEach((section) => observer.observe(section));
@@ -270,25 +256,14 @@ export default function App() {
       <div className="scroll-progress" aria-hidden="true"><span ref={scrollBarRef} /></div>
       <AuroraCanvas />
 
-      <header className="dock-container">
-        <nav className="nav-dock" aria-label="Navigation principale">
-          <a href="#hero" className="nav-brand" aria-label="HAITAM NAJIM — Accueil" onClick={closeMobileMenu}>
-            <span className="brand-monogram">HN</span>
-            <span className="brand-label">HAITAM<span className="brand-dot">.</span></span>
-          </a>
-
-          <div className={`nav-links ${mobileOpen ? 'is-open' : ''}`}>
-            {NAV_LINKS.map((link) => <a key={link.href} href={link.href} className="nav-item" onClick={closeMobileMenu}>{link.label}</a>)}
-          </div>
-
-          <div className="dock-right">
-            <button className="mobile-menu-toggle" type="button" onClick={toggleMobileMenu} aria-label="Ouvrir le menu" aria-expanded={mobileOpen} title="Menu">{mobileOpen ? '✕' : '☰'}</button>
-            <div className="dock-status" title="Disponible pour de nouvelles opportunités"><span className="status-dot" /><span className="status-text">Available</span></div>
-            <a href="#contact" className="dock-cta" onClick={closeMobileMenu}>DISPATCH →</a>
-            <button className="theme-toggle" type="button" onClick={() => setTheme((current) => current === 'light' ? 'dark' : 'light')} aria-label={theme === 'light' ? 'Passer en thème sombre' : 'Passer en thème clair'} title="Basculer thème">{theme === 'light' ? '☾' : '☀'}</button>
-          </div>
-        </nav>
-      </header>
+      <Navbar
+        activeSection={activeSection}
+        theme={theme}
+        toggleTheme={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
+        mobileOpen={mobileOpen}
+        toggleMobile={toggleMobileMenu}
+        closeMobile={closeMobileMenu}
+      />
 
       <main>
         <section id="hero" className="hero-section">
