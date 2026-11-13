@@ -348,8 +348,8 @@ main {
 
 .hero-wordmark-svg text {
   font-family: 'Bebas Neue', Impact, sans-serif;
-  fill: rgba(201, 58, 58, .22);
-  stroke: #c93a3a;
+  fill: var(--accent-red-dim);
+  stroke: var(--accent-red);
   stroke-width: 1.5;
   paint-order: stroke;
 }
