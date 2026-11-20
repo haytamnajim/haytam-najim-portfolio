@@ -1368,8 +1368,8 @@ main {
 
   .hero-stage-grid {
     grid-template-columns: 1fr;
-    /* Mobile: text first, portrait second, HUD below. */
-    grid-template-areas: 'left' 'photo' 'right';
+    /* Mobile: text first, HUD, then portrait at the end. */
+    grid-template-areas: 'left' 'right' 'photo';
     gap: 24px;
     min-height: 0;
     margin-top: 0;
@@ -1395,7 +1395,7 @@ main {
   .hero-stats-row { margin-top: 26px; }
   .stat-val { font-size: 18px; }
   .stat-lbl { font-size: 13px; }
-  .hero-cutout-wrap { width: min(100%, 380px); }
+  .hero-cutout-wrap { width: min(100%, 380px); aspect-ratio: 3/4; }
   .hud-card { padding: 18px 20px; }
   .hud-card-title { font-size: 18px; }
   .hud-card-desc { font-size: 15px; }
