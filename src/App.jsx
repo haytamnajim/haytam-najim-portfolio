@@ -159,6 +159,7 @@ export default function App() {
   const [activeLayer, setActiveLayer] = useState(1);
   const [filter, setFilter] = useState('all');
   const [toast, setToast] = useState('');
+  const [contactLoading, setContactLoading] = useState(false);
   const scrollBarRef = useRef(null);
   const firstAccent = useRef(true);
 
@@ -286,6 +287,29 @@ export default function App() {
     }
   };
 
+  const submitContact = async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    data.append('access_key', '0845bad0-cd00-4740-aad1-0ee27b0c767f');
+    setContactLoading(true);
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+      const result = await response.json();
+      if (result.success) {
+        form.reset();
+        setToast('Message envoyé. Merci de m’avoir contacté.');
+      } else {
+        setToast('Erreur envoi. Vérifie ta connexion ou ta clé Web3Forms.');
+      }
+    } catch {
+      setToast('Erreur réseau. Réessaie dans un instant.');
+    } finally {
+      setContactLoading(false);
+      window.setTimeout(() => setToast(''), 3200);
+    }
+  };
+
   const toggleMobileMenu = () => setMobileOpen((open) => !open);
   const closeMobileMenu = () => setMobileOpen(false);
   const activeLayerData = LAYER_DATA[activeLayer];
@@ -345,7 +369,14 @@ export default function App() {
 
         <div className="section-divider-bar" aria-hidden="true"><span className="divider-coord">// 05.00 SEC_CONTACT</span><span className="divider-line" /><span className="divider-index">INDEX [05 / 06]</span></div>
 
-        <section id="contact" className="section"><div className="glass-card contact-card"><div className="contact-glow-red" /><div className="contact-content"><div className="section-tag">DIRECT CONNECT</div><h2 className="contact-title">Construisons quelque chose d’utile.</h2><p className="contact-subtitle">Disponible pour des missions de développement web full stack, SaaS, automatisation IA et intégration CI/CD.</p><div className="email-action-box"><span className="email-address">haytamnajim07@gmail.com</span><button className="btn btn-primary copy-btn" onClick={copyEmail} aria-label="Copier l’email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg><span>Copy Email Address</span></button></div><div className="social-links-row"><a href="https://linkedin.com/in/haytamnajim" target="_blank" rel="noopener noreferrer" className="social-pill" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V9h4v1a6 6 0 0 1 2-1z" /><rect x="2" y="9" width="4" height="12" /><path d="M4 4h.01" /></svg><span>linkedin.com/in/haytamnajim</span></a><a href="https://haitam-najim.me" target="_blank" rel="noopener noreferrer" className="social-pill" aria-label="Site web"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg><span>haitam-najim.me</span></a><a href="tel:+212709048305" className="social-pill" aria-label="Téléphone"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.96.37 1.9.7 2.8a2 2 0 0 1-.45 2.11L8.09 10.91a16 16 0 0 0 6 6l2.28-1.16a2 2 0 0 1 2.11.45c.9.33 1.84.58 2.8.7A2 2 0 0 1 22 16.92z" /></svg><span>+212 709 048 305</span></a></div><div className="footer-meta"><span>© 2026 HAITAM NAJIM. Casablanca, Maroc.</span><span>Full Stack · AI Automation · DevOps</span></div></div></div></section>
+        <section id="contact" className="section"><div className="glass-card contact-card"><div className="contact-glow-red" /><div className="contact-content"><div className="section-tag">DIRECT CONNECT</div><h2 className="contact-title">Construisons quelque chose d’utile.</h2><p className="contact-subtitle">Disponible pour des missions de développement web full stack, SaaS, automatisation IA et intégration CI/CD.</p>
+<form className="contact-form" onSubmit={submitContact}>
+  <input className="contact-input" type="text" name="name" placeholder="Nom" required />
+  <input className="contact-input" type="email" name="email" placeholder="Email" required />
+  <textarea className="contact-input" name="message" placeholder="Votre message" required></textarea>
+  <input type="hidden" name="botcheck" />
+  <button className="btn btn-primary" type="submit" disabled={contactLoading}>{contactLoading ? 'Envoi...' : 'Envoyer'}</button>
+</form><div className="email-action-box"><span className="email-address">haytamnajim07@gmail.com</span><button className="btn btn-primary copy-btn" onClick={copyEmail} aria-label="Copier l’email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg><span>Copy Email Address</span></button></div><div className="social-links-row"><a href="https://linkedin.com/in/haytamnajim" target="_blank" rel="noopener noreferrer" className="social-pill" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V9h4v1a6 6 0 0 1 2-1z" /><rect x="2" y="9" width="4" height="12" /><path d="M4 4h.01" /></svg><span>linkedin.com/in/haytamnajim</span></a><a href="https://haitam-najim.me" target="_blank" rel="noopener noreferrer" className="social-pill" aria-label="Site web"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg><span>haitam-najim.me</span></a><a href="tel:+212709048305" className="social-pill" aria-label="Téléphone"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.96.37 1.9.7 2.8a2 2 0 0 1-.45 2.11L8.09 10.91a16 16 0 0 0 6 6l2.28-1.16a2 2 0 0 1 2.11.45c.9.33 1.84.58 2.8.7A2 2 0 0 1 22 16.92z" /></svg><span>+212 709 048 305</span></a></div><div className="footer-meta"><span>© 2026 HAITAM NAJIM. Casablanca, Maroc.</span><span>Full Stack · AI Automation · DevOps</span></div></div></div></section>
       </main>
 
       <div className="color-palette" role="toolbar" aria-label="Palette de couleurs">
