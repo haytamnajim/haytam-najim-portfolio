@@ -312,6 +312,15 @@ export default function App() {
 
   const toggleMobileMenu = () => setMobileOpen((open) => !open);
   const closeMobileMenu = () => setMobileOpen(false);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setMobileOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [mobileOpen]);
   const activeLayerData = LAYER_DATA[activeLayer];
 
   return (

@@ -11,6 +11,13 @@ const NAV_LINKS = [
 export default function Navbar({ activeSection, theme, toggleTheme, mobileOpen, toggleMobile, closeMobile }) {
   return (
     <header className="dock-container">
+      {mobileOpen && (
+        <div
+          className="mobile-nav-backdrop"
+          onClick={closeMobile}
+          aria-hidden="true"
+        />
+      )}
       <nav className="nav-dock" aria-label="Navigation principale">
         <a href="#hero" className="nav-brand" aria-label="HAITAM NAJIM — Accueil" onClick={closeMobile}>
           <span className="brand-monogram">HN</span>

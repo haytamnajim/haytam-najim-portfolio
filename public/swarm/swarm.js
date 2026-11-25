@@ -1560,6 +1560,17 @@
 .hud button.snd.off{color:#8a8a8a}
 .hud button.snd.tap{background:#0D99FF;animation:hudpulse 1.6s ease-in-out infinite}
 @keyframes hudpulse{50%{box-shadow:0 0 0 4px rgba(13,153,255,.28)}}
+@media (max-width:680px){
+  .hud{width:calc(100vw - 20px);max-width:420px;bottom:max(12px,env(safe-area-inset-bottom));padding:10px;gap:8px 6px;flex-wrap:wrap;justify-content:space-between;white-space:normal;box-sizing:border-box}
+  .hud .dots{order:1;flex:0 0 auto}
+  .hud .txt{order:2;flex:1 1 0;min-width:0;font-size:11px;line-height:1.25}
+  .hud .status{flex-wrap:wrap;gap:4px 6px;min-width:0}
+  .hud .sep{display:none}
+  .hud .bar{order:3;width:100%;flex:0 0 100%;height:3px}
+  .hud button{order:4;flex:1 1 auto;display:inline-flex;align-items:center;justify-content:center;padding:8px 8px;font-size:11px;min-height:32px;box-sizing:border-box}
+  .hud button[hidden]{display:none}
+  .hud button.snd,.hud button.x{flex:0 0 auto;padding:8px 10px}
+}
 `;
 
   // -------------------------------------------------------------------- env
