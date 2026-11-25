@@ -187,6 +187,7 @@ function SwarmLaunchButton() {
 
 export default function App() {
   const [theme, setTheme] = useState('dark');
+  const [themeAnim, setThemeAnim] = useState(null);
   const [accent, setAccent] = useState('crimson');
   const [flashKey, setFlashKey] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -348,6 +349,29 @@ export default function App() {
   const toggleMobileMenu = () => setMobileOpen((open) => !open);
   const closeMobileMenu = () => setMobileOpen(false);
 
+  const toggleTheme = (event) => {
+    const nextTheme = theme === 'light' ? 'dark' : 'light';
+    const rect = event?.currentTarget?.getBoundingClientRect?.();
+    const x = event?.clientX || (rect ? rect.left + rect.width / 2 : window.innerWidth / 2);
+    const y = event?.clientY || (rect ? rect.top + rect.height / 2 : window.innerHeight / 2);
+
+    document.documentElement.style.setProperty('--theme-x', `${x}px`);
+    document.documentElement.style.setProperty('--theme-y', `${y}px`);
+
+    setThemeAnim({ key: Date.now(), x, y, toTheme: nextTheme });
+    window.setTimeout(() => {
+      setThemeAnim((prev) => (prev && Date.now() - prev.key >= 380 ? null : prev));
+    }, 420);
+
+    if (typeof document.startViewTransition === 'function' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.startViewTransition(() => {
+        setTheme(nextTheme);
+      });
+    } else {
+      setTheme(nextTheme);
+    }
+  };
+
   useEffect(() => {
     if (!mobileOpen) return;
     const onKeyDown = (event) => {
@@ -366,7 +390,7 @@ export default function App() {
       <Navbar
         activeSection={activeSection}
         theme={theme}
-        toggleTheme={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
+        toggleTheme={toggleTheme}
         mobileOpen={mobileOpen}
         toggleMobile={toggleMobileMenu}
         closeMobile={closeMobileMenu}
@@ -423,7 +447,27 @@ export default function App() {
 </form><div className="email-action-box"><span className="email-address">haytamnajim07@gmail.com</span><button className="btn btn-primary copy-btn" onClick={copyEmail} aria-label="Copier l’email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg><span>Copy Email Address</span></button></div><div className="social-links-row"><a href="https://linkedin.com/in/haytamnajim" target="_blank" rel="noopener noreferrer" className="social-pill" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V9h4v1a6 6 0 0 1 2-1z" /><rect x="2" y="9" width="4" height="12" /><path d="M4 4h.01" /></svg><span>linkedin.com/in/haytamnajim</span></a><a href="https://haitam-najim.me" target="_blank" rel="noopener noreferrer" className="social-pill" aria-label="Site web"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg><span>haitam-najim.me</span></a><a href="tel:+212709048305" className="social-pill" aria-label="Téléphone"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.96.37 1.9.7 2.8a2 2 0 0 1-.45 2.11L8.09 10.91a16 16 0 0 0 6 6l2.28-1.16a2 2 0 0 1 2.11.45c.9.33 1.84.58 2.8.7A2 2 0 0 1 22 16.92z" /></svg><span>+212 709 048 305</span></a></div><div className="footer-meta"><span>© 2026 HAITAM NAJIM. Casablanca, Maroc.</span><span>Full Stack · AI Automation · DevOps</span></div></div></div></section>
       </main>
 
-      <div className="color-palette" role="toolbar" aria-label="Palette de couleurs">
+      <div className="color-palette" role="toolbar" aria-label="Palette de couleurs et thème">
+        <button
+          type="button"
+          className={`mode-switch-btn ${theme === 'light' ? 'is-light' : ''}`}
+          onClick={(e) => toggleTheme(e)}
+          aria-label={theme === 'light' ? 'Passer en mode sombre' : 'Passer en mode clair'}
+          title={theme === 'light' ? 'Mode sombre' : 'Mode clair'}
+        >
+          {theme === 'light' ? (
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+            </svg>
+          )}
+          <span>{theme === 'light' ? 'DARK' : 'LIGHT'}</span>
+        </button>
+        <span className="palette-sep" aria-hidden="true" />
         <span className="color-palette-label">THEME</span>
         {ACCENTS.map((item) => (
           <button
@@ -437,6 +481,32 @@ export default function App() {
           />
         ))}
       </div>
+
+      {themeAnim && (
+        <div
+          key={themeAnim.key}
+          className={`theme-cursors-overlay ${themeAnim.toTheme === 'light' ? 'to-light' : 'to-dark'}`}
+          style={{
+            '--flash-color': ACCENTS.find((item) => item.id === accent)?.value || '#ef4444',
+          }}
+          aria-hidden="true"
+        >
+          <div className="theme-wipe-line">
+            {[
+              { tag: 'UI', top: '22%', color: '#0D99FF' },
+              { tag: 'THEME', top: '50%', color: '#ef4444' },
+              { tag: 'CSS', top: '76%', color: '#10b981' },
+            ].map((cursor) => (
+              <div key={cursor.tag} className="swarm-line-cursor" style={{ top: cursor.top, '--c': cursor.color }}>
+                <svg viewBox="0 0 18 22" width="15" height="18" fill="none">
+                  <path d="M2 2l13 9-5.5 1.4L7 18 2 2z" fill="var(--c)" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" />
+                </svg>
+                <span className="cursor-tag">{cursor.tag}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {flashKey > 0 && (() => {
         const color = ACCENTS.find((item) => item.id === accent)?.value || '#ef4444';

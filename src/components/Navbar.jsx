@@ -48,7 +48,7 @@ export default function Navbar({ activeSection, theme, toggleTheme, mobileOpen, 
             <button
               className="theme-toggle"
               type="button"
-              onClick={toggleTheme}
+              onClick={(e) => toggleTheme(e)}
               aria-label={theme === 'light' ? 'Passer en thème sombre' : 'Passer en thème clair'}
               title="Basculer thème"
             >
