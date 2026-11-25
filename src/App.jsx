@@ -150,6 +150,41 @@ function Toast({ message }) {
   );
 }
 
+function SwarmLaunchButton() {
+  const [visible, setVisible] = React.useState(false);
+
+  // Show the button after 2s — long enough for the first-visit swarm to boot
+  React.useEffect(() => {
+    const timer = window.setTimeout(() => setVisible(true), 2000);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  const handleLaunch = () => {
+    if (typeof window.launchSwarm === 'function') {
+      window.launchSwarm();
+    }
+  };
+
+  return (
+    <button
+      className={`swarm-launch-btn ${visible ? 'is-visible' : ''}`}
+      onClick={handleLaunch}
+      title="Regarder la reconstruction IA"
+      aria-label="Lancer l'animation de reconstruction"
+      type="button"
+    >
+      <span className="swarm-btn-icon" aria-hidden="true">
+        {/* Play triangle */}
+        <svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor">
+          <polygon points="3,1 14,8 3,15" />
+        </svg>
+      </span>
+      <span className="swarm-btn-label">WATCH BUILD</span>
+      <span className="swarm-btn-pulse" aria-hidden="true" />
+    </button>
+  );
+}
+
 export default function App() {
   const [theme, setTheme] = useState('dark');
   const [accent, setAccent] = useState('crimson');
@@ -441,6 +476,7 @@ export default function App() {
       })()}
 
       <Toast message={toast} />
+      <SwarmLaunchButton />
     </>
   );
 }

@@ -219,4 +219,21 @@
       try { window[KEY].stop(false); } catch (_) {}
     }
   });
+
+  // ─── Manual trigger exposed for the "Watch Build" button ───────────────
+  // Clears the session flag so the swarm can re-run, then boots the engine.
+  window.launchSwarm = function () {
+    try { sessionStorage.removeItem("swarm:done"); } catch (_) {}
+    // If the engine is already loaded and running, stop it first then restart.
+    if (window[KEY] && window[KEY].app) {
+      try { window[KEY].stop(false); } catch (_) {}
+      // Small delay to let the teardown complete before reloading.
+      setTimeout(function () {
+        window[KEY] = null;
+        boot();
+      }, 320);
+    } else {
+      boot();
+    }
+  };
 })();
