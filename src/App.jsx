@@ -187,7 +187,6 @@ function SwarmLaunchButton() {
 
 export default function App() {
   const [theme, setTheme] = useState('dark');
-  const [themeAnim, setThemeAnim] = useState(null);
   const [accent, setAccent] = useState('crimson');
   const [flashKey, setFlashKey] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -358,11 +357,6 @@ export default function App() {
     document.documentElement.style.setProperty('--theme-x', `${x}px`);
     document.documentElement.style.setProperty('--theme-y', `${y}px`);
 
-    setThemeAnim({ key: Date.now(), x, y, toTheme: nextTheme });
-    window.setTimeout(() => {
-      setThemeAnim((prev) => (prev && Date.now() - prev.key >= 380 ? null : prev));
-    }, 420);
-
     if (typeof document.startViewTransition === 'function' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.startViewTransition(() => {
         setTheme(nextTheme);
@@ -481,32 +475,6 @@ export default function App() {
           />
         ))}
       </div>
-
-      {themeAnim && (
-        <div
-          key={themeAnim.key}
-          className={`theme-cursors-overlay ${themeAnim.toTheme === 'light' ? 'to-light' : 'to-dark'}`}
-          style={{
-            '--flash-color': ACCENTS.find((item) => item.id === accent)?.value || '#ef4444',
-          }}
-          aria-hidden="true"
-        >
-          <div className="theme-wipe-line">
-            {[
-              { tag: 'UI', top: '22%', color: '#0D99FF' },
-              { tag: 'THEME', top: '50%', color: '#ef4444' },
-              { tag: 'CSS', top: '76%', color: '#10b981' },
-            ].map((cursor) => (
-              <div key={cursor.tag} className="swarm-line-cursor" style={{ top: cursor.top, '--c': cursor.color }}>
-                <svg viewBox="0 0 18 22" width="15" height="18" fill="none">
-                  <path d="M2 2l13 9-5.5 1.4L7 18 2 2z" fill="var(--c)" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" />
-                </svg>
-                <span className="cursor-tag">{cursor.tag}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {flashKey > 0 && (() => {
         const color = ACCENTS.find((item) => item.id === accent)?.value || '#ef4444';

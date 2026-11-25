@@ -1613,7 +1613,7 @@ body[data-theme="light"] .scroll-progress { background: rgba(0, 0, 0, 0.08); }
    ACCENT PALETTES (7 COLORS)
    ========================================================================== */
 body {
-  transition: background-color .45s ease, color .45s ease;
+  transition: background-color .18s ease, color .18s ease;
 }
 
 body[data-accent="crimson"] { --bg-dark:#050505; --bg-surface:#0a0a0a; --bg-card:rgba(14,14,14,.78); --bg-card-hover:rgba(22,22,22,.90); --accent-red:#ef4444; --accent-red-hover:#dc2626; --accent-red-glow:rgba(239,68,68,.22); --accent-red-dim:rgba(239,68,68,.10); --accent-red-border:rgba(239,68,68,.35); }
@@ -1973,7 +1973,7 @@ body[data-theme="light"] .mode-switch-btn {
   margin: 0 2px;
 }
 
-/* Fast left-to-right View Transition wipe */
+/* Instant snappy circular View Transition reveal (220ms) */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -1981,67 +1981,19 @@ body[data-theme="light"] .mode-switch-btn {
 }
 ::view-transition-new(root) {
   z-index: 999;
-  animation: themeLineReveal 0.36s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: themeCircleReveal 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-@keyframes themeLineReveal {
+@keyframes themeCircleReveal {
   from {
-    clip-path: inset(0 100% 0 0);
+    clip-path: circle(0px at var(--theme-x, 50%) var(--theme-y, 50%));
   }
   to {
-    clip-path: inset(0 0 0 0);
+    clip-path: circle(125vmax at var(--theme-x, 50%) var(--theme-y, 50%));
   }
-}
-
-/* Fast laser line + cursors riding the wipe edge */
-.theme-cursors-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  pointer-events: none;
-  overflow: hidden;
-}
-.theme-wipe-line {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 2px;
-  background: var(--flash-color);
-  box-shadow: 0 0 18px 2px var(--flash-color);
-  will-change: transform, opacity;
-  animation: themeLineSweep 0.36s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-@keyframes themeLineSweep {
-  0%   { opacity: 1; transform: translate3d(-4px, 0, 0); }
-  85%  { opacity: 1; transform: translate3d(94vw, 0, 0); }
-  100% { opacity: 0; transform: translate3d(102vw, 0, 0); }
-}
-
-.swarm-line-cursor {
-  position: absolute;
-  left: 4px;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  transform: translateY(-50%);
-  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.35));
-}
-.swarm-line-cursor .cursor-tag {
-  padding: 2px 7px;
-  border-radius: 999px;
-  background: var(--c);
-  color: #fff;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  line-height: 1.4;
-  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-new(root) { animation: none !important; }
-  .theme-cursors-overlay { display: none !important; }
 }
 
 /* ==========================================================================
