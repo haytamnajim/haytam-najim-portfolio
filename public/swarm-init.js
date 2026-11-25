@@ -33,10 +33,8 @@
     waitFonts: true,
     // Refuse to boot if the tab never becomes visible within this window.
     visibilityTimeoutMs: 8000,
-    // false = replay the takeover on every page load (Sahi's call, 2026-11-06).
-    // Flip to true for production if returning visitors should get the live
-    // site straight away — no query flag or redeploy beyond this one line.
-    oncePerSession: false
+    // Play once per browser session so returning visitors get the live site immediately.
+    oncePerSession: true
   };
 
   function q(name) {

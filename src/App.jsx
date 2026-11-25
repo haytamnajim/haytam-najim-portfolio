@@ -403,14 +403,42 @@ export default function App() {
         ))}
       </div>
 
-      {flashKey > 0 && (
-        <div
-          key={flashKey}
-          className="accent-sweep"
-          style={{ '--flash-color': ACCENTS.find((item) => item.id === accent)?.value || '#ef4444' }}
-          aria-hidden="true"
-        />
-      )}
+      {flashKey > 0 && (() => {
+        const color = ACCENTS.find((item) => item.id === accent)?.value || '#ef4444';
+        const accentName = ACCENTS.find((item) => item.id === accent)?.name?.toUpperCase() || 'REBOOT';
+        return (
+          <React.Fragment key={flashKey}>
+            {/* Scanline principale + fill */}
+            <div
+              className="accent-sweep"
+              style={{ '--flash-color': color }}
+              aria-hidden="true"
+            />
+            {/* Colonnes de grille en cascade */}
+            <div
+              className="accent-sweep-grid"
+              style={{ '--flash-color': color }}
+              aria-hidden="true"
+            >
+              {Array.from({ length: 12 }).map((_, i) => <span key={i} />)}
+            </div>
+            {/* Halo central */}
+            <div
+              className="accent-sweep-vignette"
+              style={{ '--flash-color': color }}
+              aria-hidden="true"
+            />
+            {/* Badge REBOOT */}
+            <div
+              className="accent-sweep-badge"
+              style={{ '--flash-color': color }}
+              aria-hidden="true"
+            >
+              {accentName} //
+            </div>
+          </React.Fragment>
+        );
+      })()}
 
       <Toast message={toast} />
     </>
